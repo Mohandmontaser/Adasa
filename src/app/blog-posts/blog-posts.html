@@ -1,0 +1,411 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-mt-[146px]">
+  <div class="mb-8 flex items-center justify-between">
+    <p class="text-neutral-400">
+      عرض
+      <span class="font-bold text-white">
+        {{ posts.filter((p) => category === '' || p.category === category.replace('-', ' ')).length }}
+      </span>
+      مقالات
+    
+      @if (category !== '') {
+        <span>
+          في
+          <span class="font-bold text-orange-500 capitalize">
+            {{ category.replace('-', ' ') }}
+          </span>
+        </span>
+      }
+    </p>
+
+    <div class="flex items-center gap-2">
+
+      <div class="flex items-center bg-[#161616] border border-[#262626] rounded-xl p-1">
+    
+        <!-- Grid -->
+        <button
+          (click)="viewMode = 'grid'"
+          [class.bg-orange-500]="viewMode === 'grid'"
+          [class.text-white]="viewMode === 'grid'"
+          class="p-2 rounded-lg transition-all duration-300 text-neutral-400 hover:text-white"
+          title="عرض شبكي"
+        >
+          <i class="fa-solid fa-table-cells-large w-5 h-5"></i>
+        </button>
+    
+        <!-- List -->
+        <button
+          (click)="viewMode = 'list'"
+          [class.bg-orange-500]="viewMode === 'list'"
+          [class.text-white]="viewMode === 'list'"
+          class="p-2 rounded-lg transition-all duration-300 text-neutral-400 hover:text-white"
+          title="عرض قائمة"
+        >
+          <i class="fa-solid fa-bars w-5 h-5"></i>
+        </button>
+    
+      </div>
+    
+    
+      <!-- Clear Filter -->
+      @if (category !== '') {
+        <button
+        
+          routerLink="/blog"
+          class="text-sm text-neutral-500 hover:text-orange-500! flex items-center gap-1 transition-colors cursor-pointer"
+        >
+        
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+      
+          مسح الفلاتر
+        </button>
+      }
+    
+    </div>
+  </div>
+
+  <!-- =========================
+       GRID VIEW
+  ========================= -->
+ 
+  @if (viewMode === 'grid') {
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      @for (
+        post of posts
+          .filter((p) => category === '' || p.category === category.replace('-', ' '))
+          .slice((page - 1) * 6, page * 6);
+        track post.id
+      ) {
+        <article class="group card overflow-hidden" style="animation-delay: 0ms;">
+          <a class="block" [routerLink]="['/blog', post.slug]">
+  
+            <div class="relative h-52 overflow-hidden">
+              <img
+                [alt]="post.title"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                [src]="post.image"
+              />
+  
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              ></div>
+  
+              <div class="absolute top-4 right-4">
+                <span
+                  class="px-3 py-1 bg-[#0a0a0a]/80 backdrop-blur-sm text-white text-xs font-semibold rounded-full border border-[#333333]"
+                >
+                  {{ post.category }}
+                </span>
+              </div>
+            </div>
+  
+            <div class="p-6">
+  
+              <div class="flex items-center gap-3 text-sm text-neutral-500 mb-3">
+                <span class="flex items-center gap-1">
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+  
+                  {{ post.readTime }}
+                </span>
+  
+                <span class="w-1 h-1 bg-neutral-600 rounded-full"></span>
+  
+                <span>{{ post.date }}</span>
+              </div>
+  
+              <h3
+                class="text-xl font-bold text-white mb-3 group-hover:text-orange-500 transition-colors duration-300 line-clamp-2 leading-tight"
+              >
+                {{ post.title }}
+              </h3>
+  
+              <p
+                class="text-neutral-400 mb-5 line-clamp-2 text-sm leading-relaxed"
+              >
+                {{ post.excerpt }}
+              </p>
+  
+              <div
+                class="flex items-center justify-between pt-4 border-t border-[#262626]"
+              >
+                <div class="flex items-center gap-3">
+                  <img
+                    [alt]="post.author.name"
+                    class="w-9 h-9 rounded-full object-cover ring-2 ring-[#262626]"
+                    [src]="post.author.avatar"
+                  />
+  
+                  <div>
+                    <p class="text-sm font-medium text-white">
+                      {{ post.author.name }}
+                    </p>
+  
+                    <p class="text-xs text-neutral-500">
+                      {{ post.author.role }}
+                    </p>
+                  </div>
+                </div>
+  
+                <div
+                  class="w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center group-hover:bg-orange-500 transition-colors duration-300 border border-orange-500/20 group-hover:border-transparent"
+                >
+                  <svg
+                    class="w-4 h-4 text-orange-500 group-hover:text-white transition-colors duration-300 rotate-180"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+  
+            </div>
+          </a>
+        </article>
+
+        
+      }
+    </div>
+  }
+
+
+  <!-- =========================
+       LIST VIEW
+  ========================= -->
+
+  @if (viewMode === 'list') {
+    <div class="flex flex-col gap-6">
+      @for (
+        post of posts
+          .filter((p) => category === '' || p.category === category.replace('-', ' '))
+          .slice((page - 1) * 6, page * 6);
+        track post.id
+      ) {
+        <article
+          class="group bg-[#161616] rounded-2xl border border-[#262626] hover:border-orange-500/30 transition-all duration-500 overflow-hidden"
+        >
+          <a class="flex flex-col md:flex-row" [routerLink]="['/blog', post.slug]">
+            <!-- Image -->
+            <div class="w-full md:w-72 lg:w-80 h-52 md:h-auto flex-shrink-0 overflow-hidden">
+              <img
+                [src]="post.image"
+                [alt]="post.title"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 md:p-8 flex flex-col justify-between flex-1">
+              <div>
+                <div class="flex items-center gap-3 mb-4">
+                  <span
+                    class="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs"
+                  >
+                    {{ post.category }}
+                  </span>
+
+                  <span class="text-xs text-neutral-500 flex items-center gap-1">
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
+                    </svg>
+                    {{ post.readTime }}
+                  </span>
+                  
+                  <span class="text-xs text-neutral-500 flex items-center gap-1">
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      ></path>
+                    </svg>
+                    {{ post.date }}
+                  </span>
+                </div>
+
+                <h2
+                  class="text-2xl font-bold text-white mb-3 group-hover:text-orange-400 transition-colors"
+                >
+                  {{ post.title }}
+                </h2>
+
+                <p class="text-neutral-400 leading-relaxed line-clamp-2">
+                  {{ post.excerpt }}
+                </p>
+              </div>
+
+              <!-- Author + Read -->
+              <div class="flex items-center justify-between mt-6">
+                <div class="flex items-center gap-3">
+                  <img
+                    [src]="post.author.avatar"
+                    [alt]="post.author.name"
+                    class="w-10 h-10 rounded-full object-cover"
+                  />
+
+                  <div>
+                    <p class="text-sm text-white font-medium">
+                      {{ post.author.name }}
+                    </p>
+
+                    <p class="text-xs text-neutral-500">
+                      {{ post.author.role }}
+                    </p>
+                  </div>
+                </div>
+
+                <span class="flex items-center gap-2 text-orange-400 text-sm font-medium">
+                  اقرأ المقال
+
+                  <i
+                    class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"
+                  ></i>
+                </span>
+              </div>
+            </div>
+          </a>
+        </article>
+      }
+    </div>
+  }
+
+
+
+
+
+
+
+<!-- =========================
+     PAGINATION
+========================= -->
+
+@if (totalPages > 1) {
+
+  <div class="flex justify-center items-center gap-2 mt-12">
+
+    <!-- Previous -->
+    <button
+      (click)="previousPage()"
+      [disabled]="page === 1"
+      [class.cursor-not-allowed]="page === 1"
+      [class.text-neutral-600]="page === 1"
+      [class.bg-[#0a0a0a]]="page === 1"
+      [class.text-white]="page > 1"
+      [class.bg-[#161616]]="page > 1"
+      class="p-3 rounded-xl border transition-all duration-300 border-[#262626]"
+    >
+      <svg
+        class="w-5 h-5 rotate-180"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        ></path>
+      </svg>
+    </button>
+
+    <!-- Pages -->
+    <div class="flex items-center gap-1">
+
+      @for (number of [].constructor(totalPages); track $index) {
+
+        <button
+          (click)="page = $index + 1"
+          [class.bg-gradient-to-r]="page === $index + 1"
+          [class.from-orange-500]="page === $index + 1"
+          [class.to-orange-600]="page === $index + 1"
+          [class.text-white]="page === $index + 1"
+          class="min-w-[44px] h-11 rounded-xl text-sm font-medium transition-all duration-300 bg-[#161616] text-neutral-400 border border-[#262626] hover:border-orange-500/50 hover:text-white"
+        >
+          {{ $index + 1 }}
+        </button>
+
+      }
+
+    </div>
+
+    <!-- Next -->
+    <button
+      (click)="nextPage()"
+      [disabled]="page === totalPages"
+      [class.cursor-not-allowed]="page === totalPages"
+      [class.text-neutral-600]="page === totalPages"
+      [class.bg-[#0a0a0a]]="page === totalPages"
+      [class.text-white]="page < totalPages"
+      [class.bg-[#161616]]="page < totalPages"
+      class="p-3 rounded-xl border transition-all duration-300 border-[#262626]"
+    >
+      <svg
+        class="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"
+        ></path>
+      </svg>
+    </button>
+
+  </div>
+
+  <p class="text-center text-neutral-500 mt-4 text-sm">
+    صفحة {{ page }} من {{ totalPages }}
+  </p>
+
+}
+
+</div>

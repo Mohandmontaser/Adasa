@@ -1,0 +1,100 @@
+<main class="flex-grow pt-20">
+  <div class="min-h-screen bg-[#0a0a0a]">
+    <div class="relative py-20 overflow-hidden">
+      <div class="absolute inset-0 bg-[#0a0a0a]"></div>
+      <div
+        class="absolute inset-0 bg-[linear-gradient(rgba(38,38,38,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(38,38,38,0.5)_1px,transparent_1px)] bg-[size:60px_60px]"
+      ></div>
+      <div class="absolute inset-0">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl"></div>
+        <div
+          class="absolute bottom-0 right-1/4 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl"
+        ></div>
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span class="section-label inline-flex items-center gap-2 mb-6">
+          <i class="fa-regular fa-newspaper w-4 h-4"></i>مدونتنا
+        </span>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+          استكشف <span class="gradient-text">مقالاتنا</span>
+        </h1>
+        <p class="text-xl text-neutral-400 max-w-2xl mx-auto">
+          اكتشف الدروس والرؤى وأفضل الممارسات للتطوير الحديث
+        </p>
+      </div>
+    </div>
+
+    <div class="sticky top-20 z-40 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-[#262626]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div class="relative w-full md:w-80">
+            <input
+              placeholder="ابحث في المقالات..."
+              class="input-dark w-full px-5 py-3 pr-12"
+              type="text"
+              value=""
+            />
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500"
+            ></i>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-2">
+            <a
+              routerLink="/blog"
+              routerLinkActive="bg-gradient-to-r from-orange-500 to-orange-600 text-white"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 bg-[#161616] text-neutral-400 border border-[#262626]"
+            >
+              جميع المقالات
+            </a>
+
+            <a
+              routerLink="إضاءة"
+              routerLinkActive="bg-gradient-to-r from-orange-500 to-orange-600 text-white"
+              class="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 bg-[#161616] text-neutral-400 border border-[#262626]"
+            >
+              إضاءة
+            </a>
+
+            <a
+              routerLink="بورتريه"
+              routerLinkActive="bg-gradient-to-r from-orange-500 to-orange-600 text-white"
+              class="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 bg-[#161616] text-neutral-400 border border-[#262626]"
+            >
+              بورتريه
+            </a>
+
+            <a
+              routerLink="مناظر-طبيعية"
+              routerLinkActive="bg-gradient-to-r from-orange-500 to-orange-600 text-white"
+              class="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 bg-[#161616] text-neutral-400 border border-[#262626]"
+            >
+              مناظر طبيعية
+            </a>
+
+            <a
+              routerLink="تقنيات"
+              routerLinkActive="bg-gradient-to-r from-orange-500 to-orange-600 text-white"
+              class="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 bg-[#161616] text-neutral-400 border border-[#262626]"
+            >
+              تقنيات
+            </a>
+
+            <a
+              routerLink="معدات"
+              routerLinkActive="bg-gradient-to-r from-orange-500 to-orange-600 text-white"
+              class="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 bg-[#161616] text-neutral-400 border border-[#262626]"
+            >
+              معدات
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <router-outlet></router-outlet>
+  
+    
+  </div>
+</main>
